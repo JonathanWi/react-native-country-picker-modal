@@ -63,7 +63,11 @@ export default class CountryPicker extends Component {
     excludeCountries: React.PropTypes.array,
     styles: React.PropTypes.object,
     filterPlaceholder: React.PropTypes.string,
+    placeholderTextColor: React.PropTypes.string,
     autoFocusFilter: React.PropTypes.bool,
+    closeButtonTextStyles: React.PropTypes.object,
+    animationType: React.PropTypes.string,
+    displayButton: React.PropTypes.bool
   }
 
   static defaultProps = {
@@ -71,7 +75,10 @@ export default class CountryPicker extends Component {
     countryList: cca2List,
     excludeCountries: [],
     filterPlaceholder: 'Filter',
+    placeholderTextColor: '#AAA',
+    animationType: 'slide',
     autoFocusFilter: true,
+    displayButton: true
   }
 
   static renderEmojiFlag(cca2, emojiStyle) {
@@ -276,7 +283,7 @@ export default class CountryPicker extends Component {
   render() {
     return (
       <View>
-        <TouchableOpacity
+        {this.props.displayButton && <TouchableOpacity
           onPress={() => this.setState({ modalVisible: true })}
           activeOpacity={0.7}
         >
@@ -288,9 +295,10 @@ export default class CountryPicker extends Component {
                 {CountryPicker.renderFlag(this.props.cca2)}
               </View>)
           }
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <Modal
           visible={this.state.modalVisible}
+          animationType={this.props.animationType}
           onRequestClose={() => this.setState({ modalVisible: false })}
         >
           <View style={styles.modalContainer}>
@@ -298,6 +306,7 @@ export default class CountryPicker extends Component {
               {
                 this.props.closeable &&
                   <CloseButton
+                    closeButtonTextStyles={this.props.closeButtonTextStyles}
                     onPress={() => this.onClose()}
                   />
               }
@@ -307,6 +316,7 @@ export default class CountryPicker extends Component {
                     autoFocus={this.props.autoFocusFilter}
                     autoCorrect={false}
                     placeholder={this.props.filterPlaceholder}
+                    placeholderTextColor={this.props.placeholderTextColor}
                     style={[styles.input, !this.props.closeable && styles.inputOnly]}
                     onChangeText={this.handleFilterChange}
                     value={this.state.filter}

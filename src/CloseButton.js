@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Text
 } from 'react-native';
 
 import { getWidthPercent } from './ratio';
@@ -17,10 +18,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  closeButtonImage: {
-    height: 35,
-    width: 35,
-    resizeMode: 'contain',
+  closeButtonText: {
+    fontSize: 35,
+    lineHeight: 35,
+    fontWeight: '300'
   },
 });
 
@@ -29,10 +30,7 @@ const CloseButton = (props) => (
     <TouchableOpacity
       {...props}
     >
-      <Image
-        source={require('./ios7-close-empty.png')}
-        style={styles.closeButtonImage}
-      />
+      <Text style={[styles.closeButtonText, props.closeButtonTextStyles]}>×</Text>
     </TouchableOpacity>
   </View>
 );
